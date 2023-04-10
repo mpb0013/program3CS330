@@ -15,4 +15,4 @@ showAstarIterations = False
 
 # Astar.show.iteration.status(graph, iteration, current=NULL)
 
-# Astar.find.path
+# Astar.find.path(graph, first, last)
