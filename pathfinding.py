@@ -1,8 +1,9 @@
-#   Program 3
-#   Matthew Brown & Andrew Harkins
-#   
+#   PROGRAM 3
+#   Authors: Matthew Brown and Andrew Harkins
+#   Class: CS 330 - 01
+#   Date: March 31st, 2023
+#==============================================
 #   Astar Class File
-######################################
 
 import numpy
 import math
