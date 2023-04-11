@@ -12,5 +12,5 @@ from graph import Graph
 
 g = Graph()
 g.buildGraph('CS 330, Pathfinding, Graph AB Nodes v3.txt', 'CS 330, Pathfinding, Graph AB Connections v3.txt')
-g.printGraph()
+#g.printGraph()
 Astar.find_path(g, 1, 29)

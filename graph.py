@@ -3,8 +3,8 @@ class Node:
         self.node_num = node_num
         self.status = 1  # unvisited = 1, open = 2, closed = 3
         self.cost_so_far = float('inf')
-        self.estimated_heuristic = None
-        self.estimated_total = None
+        self.heuristic = None
+        self.total = None
         self.previous_node = None
         self.x = x
         self.z = z
@@ -15,8 +15,8 @@ class Node:
         self.node_num,
         self.status,  # unvisited = 1, open = 2, closed = 3
         self.cost_so_far,
-        self.estimated_heuristic,
-        self.estimated_total,
+        self.heuristic,
+        self.total,
         self.previous_node,
         self.x,
         self.z)
