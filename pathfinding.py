@@ -14,7 +14,6 @@ UNVISITED = 1
 OPEN      = 2
 CLOSED    = 3
 
-
 class Astar:
     def __init__(self) -> None:
         pass
