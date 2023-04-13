@@ -22,7 +22,9 @@ class Node:
         self.z)
 
 class Connection:
-    def __init__(self, conn_num, from_node, to_node, cost):
+
+
+    def __init__(self, conn_num : int, from_node : int, to_node : int, cost : int):
         self.conn_num = conn_num
         self.from_node = from_node
         self.to_node = to_node
@@ -46,7 +48,7 @@ class Graph:
                 currentLine = line.strip()
                 if not currentLine.startswith('#'):
                     info = line.split(',')
-                    self.add_node(info[1], info[7], info[8]) 
+                    self.add_node(int(info[1]), float(info[7]), float(info[8])) 
                    #print(info[1], info[7], info[8])
 
         with open(conFile, 'r') as fp:
@@ -54,7 +56,7 @@ class Graph:
                 currentLine = line.strip()
                 if not currentLine.startswith('#'):
                     info = line.split(',')
-                    self.add_connection(info[1], int(info[2]), int(info[3]), int(info[4])) 
+                    self.add_connection(int(info[1]), int(info[2]), int(info[3]), int(info[4])) 
                     #print(info[1], int(info[2]), int(info[3]), int(info[4]))
                     
     def printGraph(self):
@@ -71,11 +73,11 @@ class Graph:
     def add_connection(self, conn_num, from_node_num, to_node_num, cost):
         from_node = self.nodes[from_node_num - 1]
         to_node = self.nodes[to_node_num - 1]
-        connection = Connection(conn_num, from_node, to_node, cost)
+        connection = Connection(conn_num, from_node_num, to_node_num, cost)
         from_node.connections.append(connection)
         to_node.connections.append(connection)
         self.connections.append(connection)
 
-g = Graph()
-g.buildGraph('CS 330, Pathfinding, Graph AB Nodes v3.txt', 'CS 330, Pathfinding, Graph AB Connections v3.txt')
-g.printGraph()
+# = Graph()
+#g.buildGraph('CS 330, Pathfinding, Graph AB Nodes v3.txt', 'CS 330, Pathfinding, Graph AB Connections v3.txt')
+#g.printGraph()
