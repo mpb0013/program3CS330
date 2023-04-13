@@ -14,7 +14,7 @@ UNVISITED = 1
 OPEN      = 2
 CLOSED    = 3
 
-class Astar:
+class Astar():
     def __init__(self) -> None:
         pass
 
@@ -49,18 +49,10 @@ class Astar:
 
     # Function to get the connections for a given node
     def get_connections(graph, currentNode):
-
         # Get the indexes of all connections where the current node is the source node
         result = []
         for i in graph.connections:
-            
-            #print("Current Node being used: ")
-            #print(type(currentNode))
-            #print("Graph Node Type: ")
-            #print(type(i.from_node.node_num))
-
             if i.from_node == currentNode:
-                print("Connection Found - - - - - - - -")
                 result.append(i)
                 
         return result
@@ -91,10 +83,19 @@ class Astar:
     def find_path(graph, first : int, last : int):
         firstIndex = first - 1
         lastIndex = last - 1
-       
-        with open("trace.txt", "w") as trace_file:
+
+        if graph.firstTime:
+            fileOp = "w"
+            graph.firstTime = False
+        else:
+            fileOp = "a"
+
+        with open("trace.txt", fileOp) as trace_file:
             trace_file.write("\nA* from " + str(first) + " to " + str(last) + "\n")
             trace_file.write("  itera  unvis   open  closed\n")
+
+        if graph.firstTime:
+            graph.firstTime = False
 
         for n in graph.nodes:
             n.status = UNVISITED
@@ -114,8 +115,6 @@ class Astar:
             iteration = iteration + 1
 
             currentNode = Astar.find_lowest(graph, openNodes)
-            print("Current Node: " + str(currentNode))
-
 
             if currentNode == lastIndex:
                 Astar.show_iteration_status(graph, iteration, 0)
@@ -123,16 +122,11 @@ class Astar:
 
             currentCon = []
             currentCon = Astar.get_connections(graph, currentNode + 1)
-            print("Current Connection:")
-            print(currentCon)
-
 
             for con in currentCon:
 
                 toNode = con.to_node - 1
                 toCost = graph.nodes[currentNode].cost_so_far + con.cost
-
-                print("To cost: " + str(toCost))
 
                 if toCost < graph.nodes[toNode].cost_so_far:
                     graph.nodes[toNode].status = OPEN
@@ -146,28 +140,29 @@ class Astar:
 
             graph.nodes[currentNode].status = CLOSED                  # Close current node.
             openNodes.remove(currentNode)              # Remove current node from open list.
-            
-            print(type(openNodes))
-
 
         return graph
 
     def retrievePath(graph, first, last):
-        revPath = []
+        finalPath = []
         
         currentNode = last
         fail = 100
         
         while currentNode != first and fail > 0:
             fail = fail - 1
-            revPath.append(currentNode)
-            print(currentNode)
+            finalPath.append(currentNode)
             currentNode = graph.nodes[graph.nodes[currentNode - 1].previous_node].node_num
         
-        revPath.append(first)
-        revPath.reverse()
+        finalPath.append(first)
+        finalPath.reverse()
 
-        return revPath
+        print("Path from " + str(first) + " to " + str(last))
+        print("Path "  + str(finalPath))
+        print("Cost = " + str(graph.nodes[last - 1].cost_so_far))
+        print()
+
+        return finalPath
 
 
 

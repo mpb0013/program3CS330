@@ -14,4 +14,16 @@ g = Graph()
 g.buildGraph('CS 330, Pathfinding, Graph AB Nodes v3.txt', 'CS 330, Pathfinding, Graph AB Connections v3.txt')
 #g.printGraph()
 Astar.find_path(g, 1, 29)
-print(Astar.retrievePath(g, 1, 29))
+Astar.retrievePath(g, 1, 29)
+
+Astar.find_path(g, 1, 38)
+Astar.retrievePath(g, 1, 38)
+
+Astar.find_path(g, 11, 1)
+Astar.retrievePath(g, 11, 1)
+
+Astar.find_path(g, 33, 66)
+Astar.retrievePath(g, 33, 66)
+                   
+Astar.find_path(g, 58, 43)
+Astar.retrievePath(g, 58, 43)

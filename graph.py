@@ -41,6 +41,7 @@ class Graph:
     def __init__(self):
         self.nodes = []
         self.connections = []
+        self.firstTime = True
 
     def buildGraph(self, nodeFile, conFile):
         with open(nodeFile, 'r') as fp:
