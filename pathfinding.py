@@ -20,22 +20,24 @@ class Astar:
 
     # Function to find the lowest cost node from a list of open nodes
     def find_lowest(graph, open_nodes):
-        #     """
-        # Astar.find.lowest(graph, open.nodes) 
-        #     lowest.total   <- min(graph$nodes[open.nodes, TOTAL])                    # Determine lowest total cost of all open nodes
-        #     result.indexes <- which(graph$nodes[open.nodes, TOTAL] == lowest.total)  # Find indexes of all open nodes with lowest total cost
-        #     result         <- open.nodes[min(result.indexes)]                        # Find node number of lowest total cost open node with lowest index
-        #     return(result)
-        #     """
 
         # Get the total cost of all open nodes
-        total_costs = [graph.nodes[node].total for node in open_nodes]
+        total_costs = []
+        for i in range(open_nodes):
+            total_costs.append(open_nodes[i].total)
+
         # Determine the lowest total cost of all open nodes
         lowest_total = min(total_costs)
+
         # Get the indexes of all open nodes with lowest total cost
-        result_indexes = [i for i, cost in enumerate(total_costs) if cost == lowest_total]
+        result_indexes = []
+        for i in range(open_nodes):
+            if lowest_total == open_nodes[i].total:
+                result_indexes.append(i)
+
         # Find the node number of the lowest total cost open node with the lowest index
-        result = min([open_nodes[i] for i in result_indexes])
+        result = min(result_indexes)
+        
         return result
 
     # Function to calculate the heuristic distance between two nodes
@@ -106,8 +108,11 @@ class Astar:
         openNodes.append(firstIndex)
 
         Astar.show_iteration_status(graph, iteration, 0)
-        lengthOpenNodes = len(openNodes)
-        while lengthOpenNodes > 0:
+        #lengthOpenNodes = len(openNodes)
+
+        print(type(openNodes))
+        
+        while iteration < 2:
             iteration = iteration + 1
 
             currentNode = Astar.find_lowest(graph, openNodes)
@@ -135,10 +140,11 @@ class Astar:
 
             graph.nodes[currentNode].status = CLOSED                  # Close current node.
             openNodes = openNodes.remove(currentNode)              # Remove current node from open list.
-            print(openNodes)
+            
+            print(type(openNodes))
 
 
-            lengthOpenNodes = len(openNodes)
+            #lengthOpenNodes = len(openNodes)
 
         return graph
 
