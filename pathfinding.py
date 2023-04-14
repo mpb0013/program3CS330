@@ -81,82 +81,110 @@ class Astar():
          
 
     def find_path(graph, first : int, last : int):
+        #set the desired nodes to their indexes
         firstIndex = first - 1
         lastIndex = last - 1
 
+        #If it's the first time write to the file to clear it otherwise add to the current file
         if graph.firstTime:
             fileOp = "w"
             graph.firstTime = False
         else:
             fileOp = "a"
 
+        #Write header into file
         with open("trace.txt", fileOp) as trace_file:
             trace_file.write("\nA* from " + str(first) + " to " + str(last) + "\n")
             trace_file.write("  itera  unvis   open  closed\n")
 
-        if graph.firstTime:
-            graph.firstTime = False
-
+        #Reset all the nodes
         for n in graph.nodes:
             n.status = UNVISITED
             n.cost_so_far = float('inf')
             n.previous_node = UNDEFINED
 
+        #create the openNodes Array
         openNodes = []
 
+        #open the starting node and put into openNodes
         graph.nodes[firstIndex].status = OPEN
         graph.nodes[firstIndex].cost_so_far = 0
         iteration = 0
         openNodes.append(firstIndex)
 
+        #print out status info to file
         Astar.show_iteration_status(graph, iteration, 0)
         
+        #While there are openNodes keep finding connections
         while type(openNodes) != None:
             iteration = iteration + 1
 
+            #find the lowest cost and lowest index node and set to current
             currentNode = Astar.find_lowest(graph, openNodes)
 
+            #if the currentNode is the last one then break
             if currentNode == lastIndex:
                 Astar.show_iteration_status(graph, iteration, 0)
                 break
 
+            #create current connection list
             currentCon = []
+            #get connections of currentNode
             currentCon = Astar.get_connections(graph, currentNode + 1)
 
+            #check each connection
             for con in currentCon:
 
+                #find the connected next Node
+                #and get cost to that node
                 toNode = con.to_node - 1
                 toCost = graph.nodes[currentNode].cost_so_far + con.cost
 
+                #check the cost to the cost so far
                 if toCost < graph.nodes[toNode].cost_so_far:
+                    #open that node
                     graph.nodes[toNode].status = OPEN
+                    #update its cost so far
                     graph.nodes[toNode].cost_so_far = toCost
+                    #calculate the heuristic to end goal
                     graph.nodes[toNode].heuristic = Astar.heuristic(graph, toNode, lastIndex)
+                    #add the heursitic and cost so far into node total
                     graph.nodes[toNode].total = graph.nodes[toNode].cost_so_far + graph.nodes[toNode].heuristic
+                    #set the previous node of opened node to currentNode so we can retrieve the path
                     graph.nodes[toNode].previous_node = currentNode
+                    #add the new Node to openNodes list
                     openNodes.append(toNode)
             
+            #print currentNode to file
             Astar.show_iteration_status(graph, iteration, currentNode)
 
+            #close currentNode and remove it
             graph.nodes[currentNode].status = CLOSED                  # Close current node.
             openNodes.remove(currentNode)              # Remove current node from open list.
 
         return graph
 
+    #Function to retrieve the Path that was found by backtracking through the nodes
     def retrievePath(graph, first, last):
+        #create finalPath array
         finalPath = []
         
+        #set currentNode we are looking at to the last
         currentNode = last
         fail = 100
         
+        #Starting at last node, append the currentNode to finalPath and then set previous node to current
         while currentNode != first and fail > 0:
             fail = fail - 1
             finalPath.append(currentNode)
             currentNode = graph.nodes[graph.nodes[currentNode - 1].previous_node].node_num
         
+        #append the lastNode
         finalPath.append(first)
+        #reverse the path
         finalPath.reverse()
 
+        #print out path and path cost
         print("Path from " + str(first) + " to " + str(last))
         print("Path "  + str(finalPath))
         print("Cost = " + str(graph.nodes[last - 1].cost_so_far))

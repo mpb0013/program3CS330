@@ -10,9 +10,11 @@ from graph import Node
 from graph import Connection
 from graph import Graph
 
+#build the graph
 g = Graph()
 g.buildGraph('CS 330, Pathfinding, Graph AB Nodes v3.txt', 'CS 330, Pathfinding, Graph AB Connections v3.txt')
-#g.printGraph()
+
+#Calculate Each path using Astar Algorithm
 Astar.find_path(g, 1, 29)
 Astar.retrievePath(g, 1, 29)
 
