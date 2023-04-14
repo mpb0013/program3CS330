@@ -1,3 +1,9 @@
+#   PROGRAM 3
+#   Authors: Matthew Brown and Andrew Harkins
+#   Class: CS 330 - 01
+#   Date: April 16th, 2023
+#==============================================
+
 class Node:
     #constructor
     def __init__(self, node_num, x, z):
