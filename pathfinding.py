@@ -184,11 +184,13 @@ class Astar():
         #reverse the path
         finalPath.reverse()
 
-        #print out path and path cost
-        print("Path from " + str(first) + " to " + str(last))
-        print("Path "  + str(finalPath))
-        print("Cost = " + str(graph.nodes[last - 1].cost_so_far))
-        print()
+        with open("output.txt", "a") as trace_file:
+            #print out path and path cost to file
+            trace_file.write("\n---------------------\n")
+            trace_file.write("Path from " + str(first) + " to " + str(last) + "\n")
+            trace_file.write("Path "  + str(finalPath) + "\n")
+            trace_file.write("Cost = " + str(graph.nodes[last - 1].cost_so_far) + "\n")
+            trace_file.write("---------------------\n")
 
         return finalPath
 

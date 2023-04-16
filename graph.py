@@ -18,16 +18,8 @@ class Node:
         self.connections = []
 
     #Function for testing, prints the node
-    def printNode(self):
-        print(
-        self.node_num,
-        self.status,  # unvisited = 1, open = 2, closed = 3
-        self.cost_so_far,
-        self.heuristic,
-        self.total,
-        self.previous_node,
-        self.x,
-        self.z)
+    def printNode(self, fp):
+        fp.write(str(self.node_num) + "\t" + str(self.x) + "\t" + str(self.z) + " \n")
 
 class Connection:
 
@@ -39,12 +31,8 @@ class Connection:
         self.cost = cost
 
     #Function for testing, prints connections
-    def printConnection(self):
-        print(
-        self.conn_num,
-        self.from_node,
-        self.to_node,
-        self.cost)
+    def printConnection(self, fp):
+        fp.write(str(self.conn_num) + "\t" + str(self.from_node) + "\t" + str(self.to_node) + "\t" + str(self.cost) + " \n")
 
 class Graph:
     #constructor
@@ -72,12 +60,14 @@ class Graph:
                     self.add_connection(int(info[1]), int(info[2]), int(info[3]), int(info[4])) 
                    
     #Function for testing, prints the entire graph Nodes and Connections      
-    def printGraph(self):
+    def printGraph(self, fp):
+        fp.write("NODES: (Number, X, Z)\n")
         for n in self.nodes:
-            n.printNode()
+            n.printNode(fp)
         
+        fp.write("CONNECTIONS: (Number, FROM, TO, COST)\n")
         for c in self.connections:
-            c.printConnection()
+            c.printConnection(fp)
 
     #adds a node
     def add_node(self, node_num, x, z):
